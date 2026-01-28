@@ -1,14 +1,12 @@
 import passport from "passport";
 import User from '../models/user.mjs'
 import GoogleStrategy from 'passport-google-oauth20'
-
-const GOOGLE_CLIENT_ID = '1010614156857-atfkhgj1ie7v4d08rq84dt680oregsd3.apps.googleusercontent.com'
-const GOOGLE_CLIENT_SECRET = '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'
-
+import dotenv from 'dotenv'
+dotenv.config();
 
 passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:3003/homepage"
 },
     async function (accessToken, refreshToken, profile, cb) {
