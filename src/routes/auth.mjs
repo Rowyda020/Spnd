@@ -31,8 +31,6 @@ router.post('/register', checkSchema(createUserValidationSchema), async (req, re
         return res.status(201).send(userResponse);
     } catch (error) {
         console.error("Save error:", error);
-
-        // ✅ Handle duplicate key error
         if (error.code === 11000) {
             const field = Object.keys(error.keyPattern)[0];
             return res.status(409).send({

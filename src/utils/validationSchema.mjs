@@ -56,3 +56,24 @@ export const createIncomeValidationSchema = {
         }
     },
 }
+
+export const createExpenseValidationSchema = {
+    amount: {
+        notEmpty: {
+            errorMessage: "Please provide the amount of your income"
+        }
+    },
+    description: {
+        isString: {
+            errorMessage: "Please provide the source of income"
+        }
+    },
+    category: {
+        isString: {
+            errorMessage: "category must be a string"
+        },
+        notEmpty: {
+            errorMessage: "Please provide the category of your income"
+        }
+    },
+}

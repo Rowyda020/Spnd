@@ -20,7 +20,7 @@ router.post('/create-income', checkSchema(createIncomeValidationSchema), isLogge
         user: req.user._id
     };
 
-    const updatedIncome = data.amount + req.user.totalIncome
+    const updatedIncome = Number((data.amount + req.user.totalIncome).toFixed(3))
     const newIncome = new Income(incomeData);
     const updateUserTotalIncome = await User.findById(req.user._id)
     try {
