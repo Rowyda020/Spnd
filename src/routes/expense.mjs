@@ -5,6 +5,7 @@ import { isLoggedIn } from "../middleware/isLoggedIn.mjs";
 import { authenticateJWT } from "../middleware/jwtAuth.mjs";
 import { createExpenseValidationSchema } from "../utils/validationSchema.mjs";
 import { sendExpenseEmail, sendWarningEmail } from "../utils/emailHelper.mjs";
+import mongoose from 'mongoose'; // Add this at the top to handle ID conversion
 import dotenv from 'dotenv'
 dotenv.config();
 import {
@@ -56,4 +57,41 @@ router.get('/all-expenses', authenticateJWT, async (req, res) => {
         return res.status(401).send("are you even logged in?")
     }
 })
+
+
+router.get('/monthly-expenses', authenticateJWT, async (req, res) => {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const startOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+
+    try {
+        const result = await Expense.aggregate([
+            {
+                $match: {
+                    user: new mongoose.Types.ObjectId(req.user._id),
+                    createdAt: {
+                        $gte: startOfMonth,
+                        $lt: startOfNextMonth
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: "$amount" }
+                }
+            }
+        ]);
+
+        const summary = result.length > 0 ? result[0] : { totalAmount: 0 };
+
+        res.status(200).send({
+            total: summary.totalAmount,
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Server error calculating expenses");
+    }
+});
 export default router
