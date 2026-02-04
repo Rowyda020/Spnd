@@ -36,7 +36,6 @@ jobs:
         env:
           MONGO_INITDB_ROOT_USERNAME: test
           MONGO_INITDB_ROOT_PASSWORD: test
-        options: --health-cmd mongosh --eval "db.adminCommand('ping')"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -47,7 +46,7 @@ jobs:
           timeout 60 bash -c 'until mongosh --host localhost -u test -p test --eval "db.adminCommand(\"ping\")"; do sleep 2; done'
       - run: npm test
         env:
-          MONGO_URI: mongodb://test:test@localhost:27017/test?authSource=admin
+          MONGO_URI: mongodb+srv://spnd_user:fsociety2002@spnd-cluster.na1m69x.mongodb.net/?appName=spnd-cluster
           JWT_SECRET: test-secret
           NODE_ENV: test
 
