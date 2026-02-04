@@ -60,7 +60,7 @@ router.get('/all-incomes', authenticateJWT, async (req, res) => {
 
         res.send(incomes).status(200);
     } catch (error) {
-        return res.status(401).send("are you even logged in?")
+        return res.status(401).send("are you even logged in??")
     }
 })
 export default router 
