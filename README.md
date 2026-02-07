@@ -2,7 +2,7 @@
   <img src="https://github.com/user-attachments/assets/55c67f4b-cf72-4b6b-84b0-2fa88cce09b0" 
        alt="Spnd App Icon" 
        width="180" />
-</p
+</p>
 # 💰 Spnd - Smart Budget Tracking App
 > A full-stack budget tracking application with React Native mobile app and Node.js backend, featuring automated CI/CD deployment to AWS EC2.
   
